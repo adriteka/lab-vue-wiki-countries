@@ -1,23 +1,25 @@
 <template>
-  <article>
-    <h1>{{ country ? country.name.common : "" }}</h1>
+  <article v-if="country">
+    <h1>{{ country.name.common }}</h1>
     <img
       :src="
-        country
-          ? 'https://flagpedia.net/data/flags/h120/' +
-            country.alpha2Code.toLowerCase() +
-            '.png'
-          : ''
+        'https://flagpedia.net/data/flags/h120/' +
+        country.alpha2Code.toLowerCase() +
+        '.png'
       "
-      :alt="country ? 'Flag of ' + country.name.common : ''"
+      :alt="'Flag of ' + country.name.common"
     />
+    <!--
+    comprobar country != undefined al no disponer de un estado "loading" que muestre
+    otras etiquetas que no dependan de variables pendientes de cargar 
+    -->
     <section class="country-info">
       <h2>Capital</h2>
-      <p>{{ country ? country.capital[0] : "" }}</p>
+      <p>{{ country.capital[0] }}</p>
       <h2>Area</h2>
-      <p>{{ country ? country.area : "" }} Km²</p>
+      <p>{{ country.area }} Km²</p>
       <h2>Borders</h2>
-      <ul v-if="borderCountries">
+      <ul>
         <li v-for="b in borderCountries">
           <router-link
             :to="{ name: 'details', params: { code: b.alpha3Code } }"
@@ -41,6 +43,7 @@ const route = useRoute();
 watch(
   () => route.params.code,
   (newValue) => {
+    console.log("watcher", route.params.code, newValue);
     loadCountry();
   }
 );
@@ -72,6 +75,7 @@ section {
 
 img {
   order: -1;
+  box-shadow: 1px 1px 2px black;
 }
 
 h2,
@@ -79,7 +83,8 @@ p {
   font-size: medium;
   margin-top: 0;
 }
-/* p {
-  margin: auto 0;
-} */
+
+li {
+  padding-bottom: 0.5rem;
+}
 </style>

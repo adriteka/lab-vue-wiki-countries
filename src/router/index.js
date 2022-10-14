@@ -7,15 +7,21 @@ const routes = [
     component: () => import("../views/CountriesList.vue"),
     children: [
       {
+        path: "/",
+        name: "default-country",
+        component: () => import("../components/InfoMessage.vue"),
+      },
+      {
         path: ":code",
         name: "details",
         component: () => import("../views/CountryDetails.vue"),
       },
     ],
-  }
+  },
 ];
 
-// scrollBehavior() - parámetro opcional ¿?
+// scrollBehavior().scrollIntoView() - parámetro opcional:
+// scroll automático hasta #app al cambiar de ruta
 const router = createRouter({
   history: createWebHistory(),
   routes,

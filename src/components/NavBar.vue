@@ -7,5 +7,6 @@
 <style scoped>
 p {
     background-color: turquoise;
+    padding: 1rem;
 }
 </style>
