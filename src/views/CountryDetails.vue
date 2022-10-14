@@ -53,9 +53,9 @@ onMounted(() => {
 });
 
 const loadCountry = () => {
-  country.value = countries.filter((c) => {
+  country.value = countries.find((c) => {
     return c.alpha3Code === route.params.code;
-  })[0];
+  });
   borderCountries.value = countries.filter((c) => {
     return country.value.borders.includes(c.alpha3Code);
   });
