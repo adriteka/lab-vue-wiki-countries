@@ -1,7 +1,8 @@
 <template>
   <main>
     <nav>
-      <ul>
+      <p v-if="!countries">Loading countries…</p>
+      <ul v-else>
         <li v-for="country in countries">
           <router-link
             :to="{ name: 'details', params: { code: country.alpha3Code } }"
@@ -21,7 +22,7 @@
         </li>
       </ul>
     </nav>
-    <router-view></router-view>
+    <router-view />
   </main>
 </template>
 
@@ -29,7 +30,6 @@
 import { ref, onMounted } from "vue";
 import { getCountries } from "../helpers";
 const countries = ref(undefined);
-// import countries from "../assets/countries.json";
 
 onMounted(async () => {
   countries.value = await getCountries();
@@ -44,6 +44,11 @@ main {
 
 nav {
   background-color: bisque;
+}
+
+p {
+  text-align: center;
+  margin-top: 2rem;
 }
 
 ul {

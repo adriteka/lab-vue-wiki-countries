@@ -3,8 +3,9 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
-    name: "countries",
+    name: "home",
     component: () => import("../views/CountriesList.vue"),
+    redirect: { name: "default-country" },
     children: [
       {
         path: "/",

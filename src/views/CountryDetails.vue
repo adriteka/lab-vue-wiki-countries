@@ -34,7 +34,7 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import countries from "../assets/countries.json";
+import { getCountry, getCountries} from "../helpers";
 
 const country = ref(undefined);
 const borderCountries = ref([]);
@@ -43,8 +43,7 @@ const route = useRoute();
 watch(
   () => route.params.code,
   (newValue) => {
-    console.log("watcher", route.params.code, newValue);
-    loadCountry();
+    if (newValue) loadCountry();
   }
 );
 
@@ -52,11 +51,11 @@ onMounted(() => {
   loadCountry();
 });
 
-const loadCountry = () => {
-  country.value = countries.find((c) => {
-    return c.alpha3Code === route.params.code;
-  });
-  borderCountries.value = countries.filter((c) => {
+const loadCountry = async () => {
+  country.value = await getCountry(route.params.code);
+  // const paises = ;
+  // console.log("paises", paises);
+  borderCountries.value = (await getCountries()).filter((c) => {
     return country.value.borders.includes(c.alpha3Code);
   });
 };
@@ -67,6 +66,7 @@ article {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 2rem;
 }
 section {
   display: grid;

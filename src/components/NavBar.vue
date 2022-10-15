@@ -1,11 +1,11 @@
 <template>
-<header><p>LAB - WikiCountries</p></header>
+<header><router-link :to="{ name: 'home' }">LAB - WikiCountries</router-link></header>
 </template>
 
 <script setup></script>
 
 <style scoped>
-p {
+header {
     background-color: turquoise;
     padding: 1rem;
 }
